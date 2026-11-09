@@ -4,7 +4,7 @@ A nationwide Ghana farm-produce marketplace with familiar local measures, prices
 
 ## Stack
 
-Firebase Authentication for phone sign-in; Cloudflare Workers for the website/API; D1 for profiles and listings; private R2 photo storage. The Worker validates Firebase ID tokens before authorizing account-owned writes. Chat is currently a labelled sample preview; live listings support calling the seller.
+Firebase Authentication for Google sign-in and email/password; Cloudflare Workers for the website/API; D1 for profiles and listings; private R2 photo storage. The Worker validates Firebase ID tokens before authorizing account-owned writes. Chat is currently a labelled sample preview; live listings support calling the seller.
 
 ## Development
 
@@ -26,6 +26,6 @@ Public Firebase configuration comes from `/api/config`. Until configured, browsi
 
 ## Current status
 
-The build and automated backend/authentication tests pass locally, including signed-token verification, cross-account listing access, ownership, CSRF, uploads, and session cookies. Firebase projects, SMS configuration, Cloudflare resources, browser interaction checks, and live deployment still need account setup and end-to-end verification. Original Sites provisioning is separate from your Cloudflare account.
+The build and automated backend/authentication tests pass locally, including signed-token verification, cross-account listing access, ownership, CSRF, uploads, and session cookies. Firebase provider configuration, Cloudflare resources, browser interaction checks, and live deployment still need account setup and end-to-end verification. Original Sites provisioning is separate from your Cloudflare account.
 
 All sample produce listings and illustrative prices are labelled and separate from live listings. Contact numbers on listings are supplied by sellers; the app does not currently assert that a separately supplied contact number matches the phone used for sign-in.

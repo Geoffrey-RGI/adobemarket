@@ -2,7 +2,7 @@
 
 ## Architecture
 
-- Firebase Authentication: Ghana phone-number sign-in with reCAPTCHA and SMS codes.
+- Firebase Authentication: Google sign-in and email/password accounts, including password reset.
 - Cloudflare Worker: the website, API, Firebase ID-token verification, authorization, and secure session cookie.
 - D1 (`DB`): seller profiles, listings, photo metadata.
 - R2 (`BUCKET`): uploaded photos. The bucket does not need public access.
@@ -18,10 +18,12 @@ The Firebase web app is registered as project `adobe-market`; its public web con
 1. Create a project in https://console.firebase.google.com/ (Analytics is optional).
 2. Register a **Web app**, named `Adobe Market` or your preferred display name.
 3. Copy the public `projectId`, `apiKey`, `authDomain`, and `appId` into the Cloudflare configuration below. These identify the web app; they are not service-account secrets.
-4. In **Authentication → Sign-in method**, enable **Phone**.
-5. Check the project's billing requirements for real SMS before enabling paid use. Set SMS region policy to allow Ghana and only any other countries you intentionally support.
-6. Under phone-provider testing, add a fictional test number and code. Use it for setup verification without sending a paid SMS. Keep test codes out of the repository.
-7. Add the final `adobemarket.<your-subdomain>.workers.dev` hostname (and later the custom domain) under **Authentication → Settings → Authorized domains**.
+4. In **Authentication → Sign-in method**, enable **Google**, choose a project support email, and save.
+5. Enable **Email/Password** and save. Email-link sign-in is not required.
+6. Leave **Phone** disabled. The application does not send verification SMS. Sellers supply a phone number only as a public contact detail.
+7. Add the final `adobemarket.<your-subdomain>.workers.dev` hostname (and later the custom domain) under **Authentication → Settings → Authorized domains**. Keep the default Firebase auth domain authorized.
+8. Optionally configure Firebase's password policy and password-reset email template. New email accounts use Firebase's default password requirements unless a stronger policy is configured.
+
 
 Never commit a service-account JSON file or private key. The application does not require either.
 
@@ -72,10 +74,11 @@ If using GitHub Actions for deployment later, use narrowly scoped Cloudflare cre
 
 ## 5. Verify before launch
 
-- Sign in with the Firebase test phone, save a seller profile, and publish a photo listing.
+- Create an email/password account, sign out, sign back in, and test password reset.
+- Sign in with Google and confirm the account can save a seller profile and publish a photo listing.
 - Open a second browser/account and confirm that the listing appears.
 - Confirm other accounts cannot edit, pause, or mark the seller's listing sold.
 - Confirm anonymous browsing works, signout ends access, and own paused photos remain accessible only to the owner.
-- Finally test one real Ghana SMS after reviewing billing and region policy.
+- Confirm phone numbers are only requested for seller contact and no SMS authentication flow appears.
 
-Live cloud/SMS verification requires configured projects and account access. In-app chat is a separate next phase. Sellers and buyers arrange payment and transport themselves.
+Live provider verification requires configured projects and account access. In-app chat is a separate next phase. Sellers and buyers arrange payment and transport themselves.
