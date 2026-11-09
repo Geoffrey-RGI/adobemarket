@@ -20,7 +20,7 @@ The build bundles the Firebase web SDK and the Worker with esbuild. Generated `d
 
 ## Deployment
 
-Follow [Cloudflare + Firebase setup](docs/DEPLOYMENT.md). Copy `wrangler.example.jsonc` to `wrangler.jsonc`, fill the public Firebase app config and D1 database ID, create the D1/R2 resources, apply migrations, then deploy. The app does not need a Firebase service-account private key.
+Follow [Cloudflare + Firebase setup](docs/DEPLOYMENT.md). The tracked `wrangler.jsonc` contains the public Firebase app settings and D1 database ID. Create the configured private R2 bucket, apply migrations, then deploy. Use `wrangler.example.jsonc` as a reference when creating another environment. The app does not need a Firebase service-account private key.
 
 Public Firebase configuration comes from `/api/config`. Until configured, browsing remains available and sign-in explains that setup is pending. The old Sites sign-in endpoints and trusted identity headers are no longer used.
 

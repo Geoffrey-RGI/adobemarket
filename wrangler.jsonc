@@ -1,0 +1,30 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "adobemarket",
+  "main": "dist/server/index.js",
+  "compatibility_date": "2026-11-01",
+  "workers_dev": true,
+  "observability": {
+    "enabled": true
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "adobemarket",
+      "database_id": "07953b44-0e12-4696-89e4-b6e00a8f22cc",
+      "migrations_dir": "drizzle"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "BUCKET",
+      "bucket_name": "adobemarket-photos"
+    }
+  ],
+  "vars": {
+    "FIREBASE_PROJECT_ID": "adobe-market",
+    "FIREBASE_API_KEY": "AIzaSyALq-w0ZhxSC4VJ2RMJ9r5AIMiA9UO2Eko",
+    "FIREBASE_AUTH_DOMAIN": "adobe-market.firebaseapp.com",
+    "FIREBASE_APP_ID": "1:459396952673:web:353b9e77f4c8e6788cf020"
+  }
+}

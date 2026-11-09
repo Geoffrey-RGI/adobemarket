@@ -8,6 +8,5 @@ dist/
 .dev.vars*
 *.tar.gz
 
-wrangler.jsonc
 *service-account*.json
 *firebase-adminsdk*.json
