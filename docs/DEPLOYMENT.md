@@ -11,6 +11,8 @@ No Firebase Admin private key is needed. The Worker verifies RS256 signatures ag
 
 Firebase sessions use short-lived ID tokens. The client renews them through Firebase and syncs a Secure, HttpOnly, SameSite cookie for photo requests. Offline signature verification does not immediately detect admin-revoked sessions; tokens expire within their normal lifetime. Do not log authorization headers, cookies, or Firebase tokens.
 
+The Firebase web app is registered as project `adobe-market`; its public web configuration is already filled into `wrangler.example.jsonc`. The D1 database ID still needs to be supplied. Analytics is not enabled by the app code.
+
 ## 1. Firebase project
 
 1. Create a project in https://console.firebase.google.com/ (Analytics is optional).
