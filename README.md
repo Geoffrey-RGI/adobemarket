@@ -1,19 +1,31 @@
-# Abode Market
-Nationwide Ghana produce classifieds. Secure accounts use Sites/ChatGPT identity; Ghana phone numbers are seller-supplied contact details, not OTP-verified. The hosting audience remains owner-private until explicitly changed in Sites settings.
+# Adobe Market
 
-Profiles and produce records live in D1 (`DB`). JPEG, PNG, and WebP photos live in R2 (`BUCKET`). A listing is tied to the authenticated account, with authorization on the server for all mutations. Payments and delivery stay between buyer and seller. In-app messaging is a clearly labelled next phase; live listings support telephone contact.
+A nationwide Ghana farm-produce marketplace with familiar local measures, prices per measure, minimum quantities, seller locations, and four seller-selected delivery options. Buyers contact sellers directly to agree on payment and transport.
 
-## Build and checks
-- `npm run build` embeds authored `web/` assets into the Cloudflare Worker at `dist/server/index.js` and packages schema migrations.
-- `npm test` exercises the Worker with SQLite-backed D1 semantics and in-memory object storage, covering separate buyer/seller identities, ownership, validation, uploads, visibility, and CSRF checks.
-- Schema-only SQL migrations are under `drizzle/`. Never alter an applied migration.
+## Stack
 
-No secrets are required in source. The hosting platform injects authenticated identity headers. Never accept user-supplied identity headers on an untrusted direct origin.
+Firebase Authentication for phone sign-in; Cloudflare Workers for the website/API; D1 for profiles and listings; private R2 photo storage. The Worker validates Firebase ID tokens before authorizing account-owned writes. Chat is currently a labelled sample preview; live listings support calling the seller.
 
-## GitHub and independent hosting
+## Development
 
-This repository contains the application source, schema migrations, and automated tests. Generated `dist/` files are intentionally ignored. Use Node.js 24; there are currently no third-party runtime dependencies. Run `npm run build` before `npm test`.
+Use Node.js 24.
 
-GitHub Actions runs the build, tests, and frontend syntax check. See [deployment notes](docs/DEPLOYMENT.md) for Cloudflare/Firebase tradeoffs and the authentication changes required before hosting outside Sites.
+```sh
+npm ci
+npm run build
+npm test
+```
 
-Current status: the backend passes 12 local integration tests and Sites database provisioning succeeded, but the new backend has not been verified live at the original site URL. Browser interaction testing remains outstanding. Live in-app messaging and phone OTP verification are not implemented.
+The build bundles the Firebase web SDK and the Worker with esbuild. Generated `dist/` and local credentials/configuration are ignored. GitHub Actions builds, tests, and checks JavaScript syntax on pushes and pull requests.
+
+## Deployment
+
+Follow [Cloudflare + Firebase setup](docs/DEPLOYMENT.md). Copy `wrangler.example.jsonc` to `wrangler.jsonc`, fill the public Firebase app config and D1 database ID, create the D1/R2 resources, apply migrations, then deploy. The app does not need a Firebase service-account private key.
+
+Public Firebase configuration comes from `/api/config`. Until configured, browsing remains available and sign-in explains that setup is pending. The old Sites sign-in endpoints and trusted identity headers are no longer used.
+
+## Current status
+
+The build and automated backend/authentication tests pass locally, including signed-token verification, cross-account listing access, ownership, CSRF, uploads, and session cookies. Firebase projects, SMS configuration, Cloudflare resources, browser interaction checks, and live deployment still need account setup and end-to-end verification. Original Sites provisioning is separate from your Cloudflare account.
+
+All sample produce listings and illustrative prices are labelled and separate from live listings. Contact numbers on listings are supplied by sellers; the app does not currently assert that a separately supplied contact number matches the phone used for sign-in.

@@ -1,0 +1,21 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "adobemarket",
+  "main": "dist/server/index.js",
+  "compatibility_date": "2026-11-01",
+  "workers_dev": true,
+  "observability": { "enabled": true },
+  "d1_databases": [{
+    "binding": "DB",
+    "database_name": "adobemarket",
+    "database_id": "REPLACE_WITH_D1_DATABASE_ID",
+    "migrations_dir": "drizzle"
+  }],
+  "r2_buckets": [{ "binding": "BUCKET", "bucket_name": "adobemarket-photos" }],
+  "vars": {
+    "FIREBASE_PROJECT_ID": "REPLACE_WITH_FIREBASE_PROJECT_ID",
+    "FIREBASE_API_KEY": "REPLACE_WITH_FIREBASE_WEB_API_KEY",
+    "FIREBASE_AUTH_DOMAIN": "REPLACE_WITH_FIREBASE_AUTH_DOMAIN",
+    "FIREBASE_APP_ID": "REPLACE_WITH_FIREBASE_WEB_APP_ID"
+  }
+}
