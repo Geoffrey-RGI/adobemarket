@@ -1,3 +1,4 @@
+import {chatRoute} from './chat.js';
 import {authenticate,AuthError,sessionCookie} from './firebase-auth.js';
 export const REGIONS=['Ahafo','Ashanti','Bono','Bono East','Central','Eastern','Greater Accra','North East','Northern','Oti','Savannah','Upper East','Upper West','Volta','Western','Western North'];
 const MEASURES=['Kilo','Olonka','Tuber','Pieces','Basket','Sack','Paint bucket','Bunch'];
@@ -25,6 +26,7 @@ export async function handle(request,env){const url=new URL(request.url),path=ur
  if(path==='/api/auth/signout'&&method==='POST'){checkOrigin(request);return Response.json({ok:true},{headers:{'Set-Cookie':sessionCookie('',true),'Cache-Control':'no-store'}})}
  if(path==='/api/auth/session'&&method==='POST'){checkOrigin(request);requireUser(request);const token=request.headers.get('authorization')?.slice(7);if(!token)fail(401,'Sign in to continue.');return Response.json({ok:true},{headers:{'Set-Cookie':sessionCookie(token),'Cache-Control':'no-store'}})}
  if(path.startsWith('/api/')&&['POST','PUT','PATCH','DELETE'].includes(method)){requireUser(request);checkOrigin(request)}
+ const chat=await chatRoute(request,env,uid);if(chat)return chat;
  if(path==='/api/me'&&method==='GET'){if(!uid)return json({signedIn:false,profile:null});const profile=await env.DB.prepare('SELECT * FROM profiles WHERE user_id = ?').bind(uid).first();return json({signedIn:true,profile:safeProfile(profile)})}
  if(path==='/api/profile'&&method==='PUT'){const id=requireUser(request),p=validateProfile(await body(request)),now=new Date().toISOString();await env.DB.prepare('INSERT INTO profiles (user_id,name,phone,region,town,created_at,updated_at) VALUES (?,?,?,?,?,?,?) ON CONFLICT(user_id) DO UPDATE SET name=excluded.name,phone=excluded.phone,region=excluded.region,town=excluded.town,updated_at=excluded.updated_at').bind(id,p.name,p.phone,p.region,p.town,now,now).run();return json({profile:safeProfile({...p,created_at:now})})}
  if(path==='/api/listings'&&method==='GET'){const mine=url.searchParams.get('mine')==='1';if(mine)requireUser(request);const page=Math.max(0,Math.min(10000,Number(url.searchParams.get('offset'))||0));const result=await env.DB.prepare(selectListing+(mine?' WHERE l.owner_id = ?':' WHERE l.status = ?')+' ORDER BY l.created_at DESC LIMIT 101 OFFSET ?').bind(mine?uid:'active',page).all();return json({listings:result.results.slice(0,100).map(r=>listing(r,uid)),nextOffset:result.results.length>100?page+100:null})}

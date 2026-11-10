@@ -81,4 +81,8 @@ If using GitHub Actions for deployment later, use narrowly scoped Cloudflare cre
 - Confirm anonymous browsing works, signout ends access, and own paused photos remain accessible only to the owner.
 - Confirm phone numbers are only requested for seller contact and no SMS authentication flow appears.
 
-Live provider verification requires configured projects and account access. In-app chat is a separate next phase. Sellers and buyers arrange payment and transport themselves.
+Live provider verification requires configured projects and account access. Live chat uses D1 conversations and messages; the additive `0001_live_chat.sql` migration is required. Sellers and buyers arrange payment and transport themselves.
+
+## Chat verification after deployment
+
+Use a buyer account and a separate seller account in two browser sessions. Open a live listing as the buyer, send a message, and reply from the seller’s Messages inbox. Confirm replies appear automatically, history survives signout/sign-in, unread counts clear after opening a thread, and a third account cannot access it. Chat polls every five seconds while open; background badge counts refresh approximately every 20 seconds. Sample listings remain outside live results and never create real conversations.
