@@ -86,3 +86,11 @@ Live provider verification requires configured projects and account access. Live
 ## Chat verification after deployment
 
 Use a buyer account and a separate seller account in two browser sessions. Open a live listing as the buyer, send a message, and reply from the seller’s Messages inbox. Confirm replies appear automatically, history survives signout/sign-in, unread counts clear after opening a thread, and a third account cannot access it. Chat polls every five seconds while open; background badge counts refresh approximately every 20 seconds. Sample listings remain outside live results and never create real conversations.
+
+## Admin dashboard rollout
+
+The configuration contains the owner-supplied Firebase UID in `ADMIN_UIDS` (comma-separated UIDs are supported). Only Firebase-verified tokens whose UID is allowlisted grant admin access. Client-side visibility, an email address, or a request header cannot grant the role. No first-user registration or public admin signup exists.
+
+The deployment command must apply `0002_moderation.sql` before publishing. Refresh the site after deployment, sign in with the designated owner account, and choose **Admin**, or use `/#admin`. Counts cover marketplace records; Accounts lists seller profiles and known buyers, not every Firebase sign-in.
+
+Test with a separate buyer account: report a listing, review its evidence as admin, hide and restore the listing, and resolve the report with a reason. Confirm it disappears from anonymous search while hidden. Suspension blocks marketplace account actions and hides its listings; reinstatement preserves each listing's own status and moderation flag. Every moderation decision is recorded with the admin UID, target, time, and reason.

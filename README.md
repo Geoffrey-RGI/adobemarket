@@ -35,3 +35,9 @@ All sample produce listings and illustrative prices are labelled and separate fr
 The additive migration `drizzle/0001_live_chat.sql` creates conversations and messages without changing existing listings. The configured Cloudflare deploy command must remain `npm run db:migrate:remote && npm run deploy` so migration runs before the new Worker is published. No Firebase Firestore setup is required. Test with two distinct accounts after deployment.
 
 Messages are text-only (2,000 characters), restricted to participants, and retained across devices. Sending retries use client IDs to prevent duplicates. Existing conversations remain available when a listing is paused or sold. New conversations require an active listing. Email/push notifications and attachments are not part of this version.
+
+## Administration and reports
+
+The designated owner account (the UID configured in `ADMIN_UIDS`) sees an Admin navigation button after signing in. The dashboard provides counts, searchable listings, known marketplace accounts, report review, and an append-only action log. It supports hiding/restoring listings, suspending/reinstating accounts, and resolving/dismissing reports, with reasons required. Admins cannot suspend designated admin accounts.
+
+`drizzle/0002_moderation.sql` is additive and must run before deploying this version. Signed-in buyers can report a live listing or an incoming chat message. Admins see the evidence attached to a report; admin status does not grant general access to private conversations. A suspension restricts this marketplace account; it does not delete or disable the Firebase identity.
