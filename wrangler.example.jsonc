@@ -26,6 +26,7 @@
     "FIREBASE_API_KEY": "AIzaSyALq-w0ZhxSC4VJ2RMJ9r5AIMiA9UO2Eko",
     "FIREBASE_AUTH_DOMAIN": "adobe-market.firebaseapp.com",
     "FIREBASE_APP_ID": "1:459396952673:web:353b9e77f4c8e6788cf020",
-    "ADMIN_UIDS": "XsG3wNV5fTWYuBu1JwoOuDnCua22"
+    "ADMIN_UIDS": "XsG3wNV5fTWYuBu1JwoOuDnCua22",
+    "APP_VERSION": "seller-attention-v1"
   }
 }
