@@ -41,3 +41,11 @@ Messages are text-only (2,000 characters), restricted to participants, and retai
 The designated owner account (the UID configured in `ADMIN_UIDS`) sees an Admin navigation button after signing in. The dashboard provides counts, searchable listings, known marketplace accounts, report review, and an append-only action log. It supports hiding/restoring listings, suspending/reinstating accounts, and resolving/dismissing reports, with reasons required. Admins cannot suspend designated admin accounts.
 
 `drizzle/0002_moderation.sql` is additive and must run before deploying this version. Signed-in buyers can report a live listing or an incoming chat message. Admins see the evidence attached to a report; admin status does not grant general access to private conversations. A suspension restricts this marketplace account; it does not delete or disable the Firebase identity.
+
+## Listing review
+
+The additive `0003_listing_review.sql` migration introduces a review queue. Unreviewed listings, including existing listings with no review record, are private until approved. A seller's first explicit admin approval enables direct publication of future listings. Pending/needs-changes listings stay private when edited and resubmit as pending; reported listings also return to pending review.
+
+In **Admin → Reviews**, inspect the current listing, check the information checklist, and either approve or request changes with a note. Decisions are audited and refuse stale listing revisions. Approval does not clear a separate hide flag or suspension. Resolving a report does not implicitly approve its listing.
+
+“Listing reviewed” identifies manually reviewed listing information, not a farm inspection or a guarantee of weight, certification, or produce quality. Editing an approved listing removes that label; eligible sellers' edits may remain public without carrying the label. Existing private chat history remains accessible to participants even when a listing is awaiting review.

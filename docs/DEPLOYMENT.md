@@ -94,3 +94,11 @@ The configuration contains the owner-supplied Firebase UID in `ADMIN_UIDS` (comm
 The deployment command must apply `0002_moderation.sql` before publishing. Refresh the site after deployment, sign in with the designated owner account, and choose **Admin**, or use `/#admin`. Counts cover marketplace records; Accounts lists seller profiles and known buyers, not every Firebase sign-in.
 
 Test with a separate buyer account: report a listing, review its evidence as admin, hide and restore the listing, and resolve the report with a reason. Confirm it disappears from anonymous search while hidden. Suspension blocks marketplace account actions and hides its listings; reinstatement preserves each listing's own status and moderation flag. Every moderation decision is recorded with the admin UID, target, time, and reason.
+
+## Listing-review rollout
+
+Run the additive `0003_listing_review.sql` migration via the existing deploy command. No backfill marks old listings as approved: they appear in the pending queue and are held from public search until explicitly reviewed. Prior photos, records, and conversations are retained.
+
+After deployment, sign in as the designated admin and open **Reviews**. Inspect each listing and use the four-point information checklist before approval. Use **Request changes** to leave a note for the seller; the seller edits and resubmits from **My listings**. Reported listings are held for review. Review approval and report resolution are separate decisions.
+
+Verify with a new seller: create a listing, confirm anonymous visitors cannot see it or its photo, approve it as admin, then confirm it is public. Request changes on another listing, confirm the seller sees the note, edit/resubmit, and approve again. A seller with a successful approval can publish subsequent listings directly. A “Listing reviewed” label appears only for explicitly reviewed, unchanged listing content.
