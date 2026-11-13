@@ -102,3 +102,7 @@ Run the additive `0003_listing_review.sql` migration via the existing deploy com
 After deployment, sign in as the designated admin and open **Reviews**. Inspect each listing and use the four-point information checklist before approval. Use **Request changes** to leave a note for the seller; the seller edits and resubmits from **My listings**. Reported listings are held for review. Review approval and report resolution are separate decisions.
 
 Verify with a new seller: create a listing, confirm anonymous visitors cannot see it or its photo, approve it as admin, then confirm it is public. Request changes on another listing, confirm the seller sees the note, edit/resubmit, and approve again. A seller with a successful approval can publish subsequent listings directly. A “Listing reviewed” label appears only for explicitly reviewed, unchanged listing content.
+
+## Sample editing rollout
+
+The normal deploy command applies `0004_sample_overrides.sql` before publication. Sign in with the designated admin account and open **Admin → Samples**. Edit a sample, save it, and confirm its changes appear in **View sample listings** from another browser. Test Hide/Show and a replacement photo. Samples remain clearly labelled, cannot enter live search, and cannot start a real chat or call.

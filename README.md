@@ -51,3 +51,9 @@ In **Admin → Reviews**, inspect the current listing, check the information che
 “Listing reviewed” identifies manually reviewed listing information, not a farm inspection or a guarantee of weight, certification, or produce quality. Editing an approved listing removes that label; eligible sellers' edits may remain public without carrying the label. Existing private chat history remains accessible to participants even when a listing is awaiting review.
 
 Sellers see a red My listings count and an action banner for changes requests. Affected owned cards show the admin note and a direct Edit and resubmit action, and sort first in My listings. The note stays visible in the edit form. Counts refresh every 30 seconds while the page is visible and on window focus; resubmission clears the red action state and returns the listing to pending review. These are in-site notices, not SMS or email notifications.
+
+## Editable samples
+
+Admins can edit the eight sample listings through **Admin → Samples**, or use **Edit sample listing** while viewing a sample. Changes to photos, titles, descriptions, seller names, regions, measures, prices, minimum/available quantities, and example delivery options persist in D1 and are visible across devices. Admins can show or hide each sample. Public samples are served through `/api/samples` and remain separate from real listings and conversations. Edits and visibility changes appear in the action log.
+
+The additive `0004_sample_overrides.sql` migration stores overrides without adding fake sellers or produce to the live marketplace. Replacement photos use private R2 storage and are served publicly only while the sample is shown (or when separately authorized).
